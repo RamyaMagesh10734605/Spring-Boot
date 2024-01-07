@@ -13,7 +13,7 @@ spec:
         app: web-app
     spec:
       containers:
-        - name: '$_SERVICE_NAME'
+        - name: 'spring-boot'
           image: 'gcr.io/$PROJECT_ID/github.com/ramyamagesh10734605/spring-boot:$COMMIT_SHA'
           ports:
             - containerPort: 80
