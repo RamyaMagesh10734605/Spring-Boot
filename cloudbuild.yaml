@@ -6,7 +6,6 @@ steps:
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/polished-studio-410501/github.com/ramyamagesh10734605/spring-boot:$COMMIT_SHA', '.']
-    docker build \
   # Push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA']
