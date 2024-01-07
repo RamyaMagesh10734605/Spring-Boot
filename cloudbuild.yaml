@@ -10,16 +10,27 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA']
   # Deploy container image to Cloud Run
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: gcloud
-    args:
-      - 'run'
-      - 'deploy'
-      - '$_SERVICE_NAME'
-      - '--image'
-      - 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA'
-      - '--region'
-      - '$_DEPLOY_REGION'
+  #- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  # entrypoint: gcloud
+  #  args:
+  #    - 'run'
+  #    - 'deploy'
+  #    - '$_SERVICE_NAME'
+  #    - '--image'
+  #    - 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA'
+  #    - '--region'
+  #    - '$_DEPLOY_REGION'
+  - name: 'gcr.io/cloud-builders/gcloud'
+  id: Deploy
+  entrypoint: 'bash'
+  args:
+    - '-c'
+    - |
+        # PROJECT=$$(gcloud config get-value core/project)          
+         gke-gcloud-auth-plugin --version
+         export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+         gcloud container clusters get-credentials "gke-cluster" --project '$PROJECT_ID'  --zone '$_ZONE'  
+         kubectl apply -f deployment.yaml
 options:
   logging: CLOUD_LOGGING_ONLY
 
