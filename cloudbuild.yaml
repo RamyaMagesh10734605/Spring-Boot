@@ -21,11 +21,11 @@ steps:
   #    - '--region'
   #    - '$_DEPLOY_REGION'
   - name: 'gcr.io/cloud-builders/gcloud'
-  id: Deploy
-  entrypoint: 'bash'
-  args:
-    - '-c'
-    - |
+    id: Deploy
+    entrypoint: 'bash'
+    args:
+     - '-c'
+     - |
         # PROJECT=$$(gcloud config get-value core/project)          
          gke-gcloud-auth-plugin --version
          export USE_GKE_GCLOUD_AUTH_PLUGIN=True
