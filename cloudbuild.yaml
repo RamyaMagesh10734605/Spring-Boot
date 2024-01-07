@@ -20,17 +20,14 @@ steps:
   #    - 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA'
   #    - '--region'
   #    - '$_DEPLOY_REGION'
-  - name: 'gcr.io/cloud-builders/gcloud'
-    id: Deploy
-    entrypoint: 'bash'
+  - name: 'gcr.io/cloud-builders/gke-deploy'
     args:
-     - '-c'
-     - |
-        # PROJECT=$$(gcloud config get-value core/project)          
-         gke-gcloud-auth-plugin --version
-         export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-         gcloud container clusters get-credentials "gke-cluster" --project '$PROJECT_ID'  --region us-central1
-         kubectl apply -f deployment.yaml
+     - run
+     - --filename=./deployment.yaml
+     - --image='gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA'
+     - --location=us-central1-c
+     - --cluster=cluster-1
+     
 options:
   logging: CLOUD_LOGGING_ONLY
 
