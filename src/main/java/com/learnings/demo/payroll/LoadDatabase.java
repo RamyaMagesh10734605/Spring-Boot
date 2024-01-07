@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
 		return args -> {
 		log.info("Preloading "+
 	      repository.save(new Employee("Ramya","Specialist")));
+		
 		log.info("Preloading "+ repository.save(new Employee("Magesh","Architect")));
 		};
 		
