@@ -24,7 +24,7 @@ steps:
     args:
      - run
      - --filename=./deployment.yaml
-     - --image='gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA'
+     - --image='gcr.io/$PROJECT_ID/github.com/ramyamagesh10734605/spring-boot:$COMMIT_SHA'
      - --location=us-central1-c
      - --cluster=cluster-1
      
