@@ -5,10 +5,10 @@ steps:
   #https://cloud.google.com/build/docs/cloud-builders
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/github.com/ramyamagesh10734605/spring-boot:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA', '.']
   # Push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/github.com/ramyamagesh10734605/spring-boot:$COMMIT_SHA']
+    args: ['push', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA']
   # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
@@ -20,13 +20,6 @@ steps:
       - 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA'
       - '--region'
       - '$_DEPLOY_REGION'
- # - name: 'gcr.io/cloud-builders/gke-deploy'
- #   args:
- #    - run
- #   - --filename=./deployment.yaml
- #    - --image=gcr.io/$PROJECT_ID/github.com/ramyamagesh10734605/spring-boot:$COMMIT_SHA
- #    - --location=us-central1-c
- #    - --cluster=cluster-1
-     
 options:
   logging: CLOUD_LOGGING_ONLY
+ 
