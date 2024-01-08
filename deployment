@@ -1,23 +1,21 @@
-apiVersion: apps/v1
+
 kind: Deployment
+apiVersion: apps/v1
 metadata:
   name: spring-boot
-  labels:
-    app: spring-boot
 spec:
-  selector:
-    matchLabels:
-      app: spring-boot
-  replicas: 1
-  strategy:
-    type: RollingUpdate
   template:
-    metadata:
-      labels:
-        app: spring-boot
     spec:
       containers:
-       —name: spring-boot
-          image: gcr.io/$PROJECT_ID/github.com/ramyamagesh10734605/spring-boot:$COMMIT_SHA
-          ports:
-           —containerPort: 80
+      - name: spring-boot
+        image: gcr.io/$PROJECT_ID/github.com/ramyamagesh10734605/spring-boot:$COMMIT_SHA
+        resources:
+          requests:
+            cpu: 25m
+            memory: 64Mi
+          limits:
+            cpu: 100m
+            memory: 256Mi
+        env:
+        - name: ENVIRONMENT
+          value: prod
