@@ -9,15 +9,17 @@ steps:
   # Push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA']
-  # Deploy container image to GKE
-  - name: 'gcr.io/cloud-builders/gke-deploy'
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
     args:
-      - run
-      - --filename=./deployment.yaml
-      - --image=gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA
-      - --location=us-central1-c
-      - --cluster=cluster-1
-      
+      - 'run'
+      - 'deploy'
+      - '$_SERVICE_NAME'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA'
+      - '--region'
+      - '$_DEPLOY_REGION'
 options:
   logging: CLOUD_LOGGING_ONLY
  
